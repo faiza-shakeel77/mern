@@ -73,8 +73,8 @@ const loginUser = async (req, res, next) => {
         if(!comparePass) {
             return next(new HttpError("Invalid credentials.",422))
         }
-        const {_id: id, name} = user;
-        const token = jwt.sign({id, name},process.env.jWT_SECRET, {expiresIn: "1d"})
+        const {id, name} = user;
+        const token = jwt.sign(id, name,process.env.jWT_SECRET, {expiresIn: "1d"})
         res.status(200).json({token, id, name})
    } catch (error) {
     return next(new HttpError("Login failed. Please check your credentials.",422))
